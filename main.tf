@@ -4,10 +4,6 @@ data "template_file" "test" {
 }
 
 resource "null_resource" "sleep" {
-  triggers {
-    uuid = uuid()
-  }
-
   provisioner "local-exec" {
     command = "sleep var.sleepy_time"
   }
