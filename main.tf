@@ -1,10 +1,11 @@
-# Create an arbitrary local resource
-data "template_file" "test" {
-  template = "Hello, I am a template. My sample_var value = sample_var"
+resource "time_sleep" "wait_seconds" {
+  create_duration = "3000s"
 }
 
-resource "null_resource" "sleep" {
-  provisioner "local-exec" {
-    command = "sleep var.sleepy_time"
+resource "null_resource" "topic_events" {
+  triggers = {
+    always_run = timestamp()
+    topic = "test"
   }
+  depends_on = [time_sleep.wait_seconds]
 }
